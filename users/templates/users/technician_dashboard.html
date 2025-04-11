@@ -1,0 +1,64 @@
+{% extends "users/base.html" %}
+{% block title %}لوحة الفني{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>مرحباً {{ user.get_full_name }}</h2>
+    <p class="lead">أنت مسجل كـ <strong>فني</strong> في منطقة {{ user.region }}</p>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-warning">
+                    <h4>طلبات جديدة في منطقتك</h4>
+                </div>
+                <div class="card-body">
+                    {% if available_requests %}
+                    <div class="list-group">
+                        {% for req in available_requests %}
+                        <div class="list-group-item">
+                            <h5>طلب #{{ req.id }}</h5>
+                            <p><strong>العميل:</strong> {{ req.customer.get_full_name }}</p>
+                            <p><strong>العنوان:</strong> {{ req.address }}</p>
+                            <p><strong>الطاقة المطلوبة:</strong> {{ req.required_power }}</p>
+                            <a href="{% url 'solar:accept_request' req.id %}" class="btn btn-sm btn-success">
+                                قبول الطلب
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">لا توجد طلبات جديدة في منطقتك</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>طلباتك المقبولة</h4>
+                </div>
+                <div class="card-body">
+                    {% if accepted_requests %}
+                    <div class="list-group">
+                        {% for req in accepted_requests %}
+                        <div class="list-group-item">
+                            <h5>طلب #{{ req.id }}</h5>
+                            <p><strong>الحالة:</strong> 
+                                <span class="badge bg-primary">{{ req.get_status_display }}</span>
+                            </p>
+                            <p><strong>العميل:</strong> {{ req.customer.get_full_name }}</p>
+                            <p><strong>تاريخ الطلب:</strong> {{ req.created_at|date:"Y-m-d" }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">لا توجد طلبات مقبولة حالياً</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

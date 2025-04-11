@@ -1,0 +1,22 @@
+{% extends "solar/base_solar.html" %}
+
+{% block solar_content %}
+<form method="post" class="mt-4">
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ form.address.label_tag }}
+        {{ form.address }}
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            {{ form.required_power.label_tag }}
+            {{ form.required_power }}
+        </div>
+        <div class="col-md-6">
+            {{ form.installation_date.label_tag }}
+            {{ form.installation_date }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">إرسال الطلب</button>
+</form>
+{% endblock %}

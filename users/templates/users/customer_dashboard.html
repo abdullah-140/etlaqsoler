@@ -1,0 +1,54 @@
+{% extends "users/base.html" %}
+{% block title %}لوحة العميل{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>مرحباً {{ user.get_full_name }}</h2>
+    <p class="lead">أنت مسجل كـ <strong>عميل</strong> في منطقة {{ user.region }}</p>
+    
+    <div class="text-end mb-4">
+        <a href="{% url 'solar:create_request' %}" class="btn btn-success">
+            إنشاء طلب جديد
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h4>طلبات التركيب الخاصة بك</h4>
+        </div>
+        <div class="card-body">
+            {% if installation_requests %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>رقم الطلب</th>
+                        <th>الحالة</th>
+                        <th>التاريخ</th>
+                        <th>العنوان</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in installation_requests %}
+                    <tr>
+                        <td>{{ req.id }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if req.status == 'pending' %}bg-warning
+                                {% elif req.status == 'accepted' %}bg-primary
+                                {% else %}bg-success{% endif %}">
+                                {{ req.get_status_display }}
+                            </span>
+                        </td>
+                        <td>{{ req.created_at|date:"Y-m-d" }}</td>
+                        <td>{{ req.address }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-info">لا توجد طلبات حالياً</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

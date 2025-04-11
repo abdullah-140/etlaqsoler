@@ -1,0 +1,48 @@
+{% extends "users/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h4>تفاصيل الطلب #{{ request.id }}</h4>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <th>الحالة:</th>
+                    <td>
+                        <span class="badge 
+                            {% if request.status == 'pending' %}bg-warning
+                            {% elif request.status == 'accepted' %}bg-primary
+                            {% else %}bg-success{% endif %}">
+                            {{ request.get_status_display }}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>العنوان:</th>
+                    <td>{{ request.address }}</td>
+                </tr>
+                <tr>
+                    <th>القدرة المطلوبة:</th>
+                    <td>{{ request.required_power }}</td>
+                </tr>
+                <tr>
+                    <th>تاريخ التركيب:</th>
+                    <td>{{ request.installation_date }}</td>
+                </tr>
+                {% if request.technician %}
+                <tr>
+                    <th>الفني المسؤول:</th>
+                    <td>{{ request.technician.get_full_name }}</td>
+                </tr>
+                {% endif %}
+            </table>
+            
+            <a href="{% url 'solar:customer_dashboard' %}" class="btn btn-secondary">
+                العودة إلى لوحة التحكم
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
