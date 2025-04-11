@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    home, 
+    index, 
     profile,  # تأكد من وجود هذه الوظيفة مستوردة
     RegisterView,
     dashboard_redirect, 
@@ -11,7 +11,7 @@ from .views import (
 app_name = 'users'  # إضافة namespace للتطبيق
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', index, name='index'),
     
     path('register/', RegisterView.as_view(), name='register'),
 path('profile/', profile, name='profile'),  # الاسم الصحيح هو 'profile'

@@ -60,8 +60,8 @@ def technician_dashboard(request):
         messages.error(request, f'حدث خطأ: {str(e)}')
         return redirect('users:home')
 
-def home(request):
-    return render(request, 'users/home.html')
+def index(request):
+    return render(request, 'users/index.html')
 
 
 class RegisterView(View):
