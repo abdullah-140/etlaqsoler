@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "etlaqsoler"
+version = "0.1.0"
+description = "My Django Project"
+authors = ["Your Name <your@email.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+asgiref = "3.5.2"
+certifi = "2022.9.24"
+Django = "4.1.2"
+gunicorn = "21.2.0"
+whitenoise = "6.6.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
